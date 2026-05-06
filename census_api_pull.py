@@ -12,7 +12,7 @@ else:
     raise ValueError("Please provide a STATE_FIPS (e.g., 13 for Georgia)")
 
 # ==========================================================
-# 🔹 FUNCTION: CALL CENSUS API
+#  FUNCTION: CALL CENSUS API
 # ==========================================================
 def get_acs_data(params):
     response = requests.get(BASE_URL, params=params)
@@ -28,7 +28,7 @@ def get_acs_data(params):
 
 
 # ==========================================================
-# 🔹 1. TOTAL POPULATION + AGE (B01001)
+#  1. TOTAL POPULATION + AGE (B01001)
 # ==========================================================
 params_total = {
     "get": "NAME,B01001_001E,"
@@ -54,7 +54,7 @@ df_total[cols_total] = df_total[cols_total].apply(pd.to_numeric)
 
 
 # ==========================================================
-# 🔹 2. BLACK AGE (B01001B)
+#  2. BLACK AGE (B01001B)
 # ==========================================================
 params_black = {
     "get": "NAME,"
@@ -79,7 +79,7 @@ df_black[cols_black] = df_black[cols_black].apply(pd.to_numeric)
 
 
 # ==========================================================
-# 🔹 3. RACE TOTALS (B02001)
+#  3. RACE TOTALS (B02001)
 # ==========================================================
 params_race = {
     "get": "NAME,B02001_002E,B02001_003E,B02001_005E",
@@ -96,7 +96,7 @@ df_race[cols_race] = df_race[cols_race].apply(pd.to_numeric)
 
 
 # ==========================================================
-# 🔹 4. INCOME (B19001)
+#  4. INCOME (B19001)
 # ==========================================================
 params_income = {
     "get": "NAME,"
@@ -115,14 +115,14 @@ df_income[cols_income] = df_income[cols_income].apply(pd.to_numeric)
 
 
 # ==========================================================
-# 🔹 5. MERGE ALL TABLES
+#  5. MERGE ALL TABLES
 # ==========================================================
 df = df_total.merge(df_black, on=["state", "county"])
 df = df.merge(df_race, on=["state", "county"])
 df = df.merge(df_income, on=["state", "county"])
 
 # ==========================================================
-# 🔹 6. CREATE GEOID + COUNTY NAME
+#  6. CREATE GEOID + COUNTY NAME
 # ==========================================================
 df["geoid"] = df["state"] + df["county"]
 df[["county_name", "state_name"]] = df["NAME"].str.split(", ", expand=True)
@@ -131,7 +131,7 @@ state_name_clean = state_name.lower().replace(" ", "_")
 
 
 # ==========================================================
-# 🔹 7. CREATE AGE BUCKETS (TOTAL)
+#  7. CREATE AGE BUCKETS (TOTAL)
 # ==========================================================
 df["total_18_29"] = df[[
     "B01001_007E","B01001_008E","B01001_009E","B01001_010E","B01001_011E",
@@ -155,7 +155,7 @@ df["total_65_plus"] = df[[
 
 
 # ==========================================================
-# 🔹 8. CREATE BLACK AGE BUCKETS
+#  8. CREATE BLACK AGE BUCKETS
 # ==========================================================
 df["black_18_29"] = df[[
     "B01001B_007E","B01001B_008E","B01001B_009E",
@@ -179,7 +179,7 @@ df["black_65_plus"] = df[[
 
 
 # ==========================================================
-# 🔹 9. INCOME BUCKETS
+#  9. INCOME BUCKETS
 # ==========================================================
 df["low_income_hh"] = df[[
     "B19001_002E","B19001_003E","B19001_004E","B19001_005E"
@@ -191,7 +191,7 @@ df["high_income_hh"] = df[[
 
 
 # ==========================================================
-# 🔹 10. FINAL OUTPUT
+#  10. FINAL OUTPUT
 # ==========================================================
 df_final = df[[
     "geoid",
