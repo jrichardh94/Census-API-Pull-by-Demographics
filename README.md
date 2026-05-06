@@ -18,7 +18,14 @@ The Census Bureau provides demographic data through the ACS API, but retrieving 
 - Census Bureau ACS API
 
 ## Example Output
-[to be added]
+
+### Excerpt of County-level result for Georgia:
+<img width="1841" height="337" alt="image" src="https://github.com/user-attachments/assets/2b4e01d6-f90c-477a-aa16-26f81d69ab88" />
+
+### Using the data as an input for mapping in GIS:
+<img width="772" height="1006" alt="image" src="https://github.com/user-attachments/assets/43beefae-ef86-4c1f-8fb1-33663d9a2abc" />
+
+
 
 ## Key Insight
 Census ACS demographic variables are granular enough to produce highly detailed county-level summaries. For example, the script can estimate populations by age, race, and income category for every county in a selected state. Including a GEOID for each county also allows for seamless integration into GIS workflows and SQL databases for downstream spatial or statistical analysis.
